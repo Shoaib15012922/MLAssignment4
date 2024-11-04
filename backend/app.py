@@ -16,18 +16,23 @@ with open("perceptron_model.pkl", "rb") as perc_file:
 
 
 @app.route('/predict', methods=['POST'])
+@app.route('/predict', methods=['POST'])
 def predict():
     data = request.get_json()
     model_type = data.get('model_type', 'naive_bayes')
     input_features = np.array([[data['age'], data['glucose'], data['insulin'], data['bmi']]])
-    
+
+    print(f"Received data: {data}")  # Print received data for debugging
+
     if model_type == 'naive_bayes':
         prediction = loaded_nb_model.predict(input_features)
     elif model_type == 'perceptron':
         prediction = loaded_perceptron_model.predict(input_features)
     else:
         return jsonify({'error': 'Invalid model type'}), 400
-    
+
+    print(f"Predicted diabetes type: {int(prediction[0])}")  # Print prediction
+
     return jsonify({'diabetes_type': int(prediction[0])})
 
 if __name__ == "__main__":
