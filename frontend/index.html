@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes Type Classification</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Diabetes Type Classification</h1>
+        <form id="predictionForm">
+            <label>Age: <input type="number" id="age" min="0" max="120" required></label>
+            <label>Blood Sugar Level: <input type="number" id="glucose" min="0" required></label>
+            <label>Insulin Level: <input type="number" id="insulin" min="0" required></label>
+            <label>BMI: <input type="number" id="bmi" min="0" step="0.1" required></label>
+            <label>Model Type: 
+                <select id="model_type">
+                    <option value="naive_bayes">Naive Bayes</option>
+                    <option value="perceptron">Perceptron</option>
+                </select>
+            </label>
+            <button type="button" onclick="makePrediction()">Predict</button>
+        </form>
+        <h2>Prediction Result:</h2>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        async function makePrediction() {
+            // Clear the result area
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerText = 'Loading...';
+
+            // Collect user input values
+            const age = document.getElementById('age').value;
+            const glucose = document.getElementById('glucose').value;
+            const insulin = document.getElementById('insulin').value;
+            const bmi = document.getElementById('bmi').value;
+            const modelType = document.getElementById('model_type').value;
+
+            try {
+                // Send a POST request to the Flask API
+                const response = await fetch('http://127.0.0.1:5000/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        age: parseFloat(age),
+                        glucose: parseFloat(glucose),
+                        insulin: parseFloat(insulin),
+                        bmi: parseFloat(bmi),
+                        model_type: modelType
+                    })
+                });
+
+                // Check if response is OK
+                if (!response.ok) {
+                    throw new Error('Error in API response');
+                }
+
+                // Parse JSON response
+                const result = await response.json();
+
+                // Display the prediction result
+                resultDiv.innerText = `Diabetes Type: ${result.diabetes_type}`;
+                resultDiv.classList.add("fade-in"); // Optional animation class
+            } catch (error) {
+                console.error("Error:", error);
+                resultDiv.innerText = 'Failed to get a prediction. Please try again.';
+            }
+        }
+    </script>
+</body>
+</html>

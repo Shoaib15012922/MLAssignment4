@@ -1,0 +1,132 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #0d47a1, #42a5f5);
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+
+.container {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    animation: fadeInContainer 1s ease-out;
+}
+
+h1 {
+    font-size: 2rem;
+    color: #0d47a1;
+    margin-bottom: 1.5rem;
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+form label {
+    font-weight: 600;
+    color: #333;
+}
+
+form input, form select {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background: #f4f6f8;
+    color: #333;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+form input:focus, form select:focus {
+    outline: none;
+    border: 1px solid #0d47a1;
+    box-shadow: 0 0 8px rgba(13, 71, 161, 0.2);
+    transform: scale(1.02);
+}
+
+
+button {
+    margin-top: 1.5rem;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    background: #0d47a1;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s ease;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+}
+
+button:hover {
+    background: #1565c0;
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+
+#result {
+    margin-top: 1rem;
+    font-size: 1.3rem;
+    color: #0d47a1;
+    opacity: 0;
+    transition: opacity 1s ease-in;
+}
+
+
+.fade-in {
+    opacity: 1;
+}
+
+@keyframes fadeInContainer {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+@media (max-width: 500px) {
+    .container {
+        width: 90%;
+        padding: 2rem;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    form input, form select {
+        font-size: 0.9rem;
+    }
+
+    button {
+        font-size: 0.9rem;
+    }
+
+    #result {
+        font-size: 1.2rem;
+    }
+}
