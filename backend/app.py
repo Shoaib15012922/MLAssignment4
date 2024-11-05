@@ -31,7 +31,7 @@ def predict():
     else:
         return jsonify({'error': 'Invalid model type'}), 400
 
-    print(f"Predicted diabetes type: {int(prediction[0])}")  # Print prediction
+    print(f"Predicted diabetes type: {int(prediction[0])}")
 
     return jsonify({'diabetes_type': int(prediction[0])})
 
